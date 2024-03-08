@@ -27,6 +27,7 @@
   background: #ff9f00;
   border: 1px solid;
   margin-top: 10px;
+  padding: 8px;
   border-color: #a88734 #9c7e31 #846a29;
   color: #111;
 }
@@ -37,5 +38,13 @@
 
 .product__info {
   height: 100px;
+  width: 100%;
   margin-bottom: 15px;
+  margin-left: 15px;
+  letter-spacing: 1px;
+}
+
+.product__info > p {
+  font-size: 1.2rem;
+  font-weight: 600;
 }

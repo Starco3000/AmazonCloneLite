@@ -1,24 +1,44 @@
 import React from 'react';
 import './Product.css';
+import { useStateValue } from '../StateProvider';
 
-function Product() {
+function Product({ id, title, price, rating, image }) {
+  const [state, dispatch] = useStateValue();
+
+  const handleAddToCart = () => {
+    dispatch({
+      type: 'ADD_TO_CART',
+      item: {
+        id: id,
+        title: title,
+        price: price,
+        rating: rating,
+        image: image,
+      },
+    });
+  };
+
   return (
     <div className="product">
       <div className="product__info">
-        <p>
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Atque,
-          expedita!
+        <p>{title}</p>
+
+        <p className="product__price">
+          <small>$</small>
+          <strong>{price}</strong>
         </p>
-        <p className="product__price">30$</p>
-        <div className="product__rating">⭐⭐⭐</div>
+        <div className="product__rating">
+          {Array(rating)
+            .fill()
+            .map((_, i) => (
+              <p>⭐</p>
+            ))}
+        </div>
       </div>
 
-      <img
-        src="https://m.media-amazon.com/images/I/61UDx9jF0mL._AC_SL1315_.jpg"
-        alt="product-image"
-      />
+      <img src={image} alt="product pic" />
 
-      <button>Add to card</button>
+      <button onClick={handleAddToCart}>Add to card</button>
     </div>
   );
 }

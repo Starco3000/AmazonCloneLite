@@ -57,14 +57,22 @@
   margin-left: 10px;
   margin-right: 10px;
   color: #fff;
+  box-sizing: border-box;
 }
 
 .nav__itemLineOne {
   font-size: 1rem;
 }
 
+.nav__itemLineOne--loggedIn > span {
+  /* Your CSS here */
+  font-size: 1rem;
+  margin-top: 5px;
+  font-weight: 800;
+}
+
 .nav__itemLineTwo {
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   font-weight: 800;
 }
 .nav__itemCart {

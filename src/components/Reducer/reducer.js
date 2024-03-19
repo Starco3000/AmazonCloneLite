@@ -1,6 +1,7 @@
 // Here we define all the application level and define actions to make the changes to the state
 export const initialState = {
   cart: [],
+  user: null,
 };
 
 // Selector
@@ -11,6 +12,11 @@ export const getCartTotal = (cart) => {
 
 const reducer = (state, action) => {
   switch (action.type) {
+    case 'SET_USER':
+      return {
+        ...state,
+        user: action.user,
+      };
     case 'ADD_TO_CART':
       return {
         ...state,

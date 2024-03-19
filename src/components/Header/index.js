@@ -1,5 +1,7 @@
 import React from 'react';
 import './Header.css';
+import { signOut } from 'firebase/auth';
+import { auth } from '../../Firebase';
 
 import ShoppingCartOutlinedIcon from '@material-ui/icons/ShoppingCartOutlined';
 import StorefrontOutlinedIcon from '@material-ui/icons/StorefrontOutlined';
@@ -8,7 +10,27 @@ import { Link } from 'react-router-dom';
 import { useStateValue } from '../StateProvider';
 
 function Header() {
-  const [{ cart }, dispatch] = useStateValue();
+  const [{ cart, user }, dispatch] = useStateValue();
+
+  //Trích xuất tên người dùng từ email
+  const userName = user ? user.email.split('@')[0] : 'Guest';
+
+  const handleSignOut = () => {
+    if (user) {
+      signOut(auth)
+        .then(() => {
+          // Sign-out successful.
+          dispatch({
+            type: 'SET_USER',
+            user: null,
+          });
+        })
+        .catch((error) => {
+          // An error happened.
+          console.error('Error signing out', error);
+        });
+    }
+  };
 
   return (
     <div className="header">
@@ -24,10 +46,12 @@ function Header() {
       </div>
 
       <div className="header__nav">
-        <div className="nav__item">
-          <div className="nav__itemLineOne">Hello Guest</div>
-          <div className="nav__itemLineTwo">Sign In</div>
-        </div>
+        <Link to={!user && '/login'} style={{ textDecoration: 'none' }}>
+          <div className="nav__item" onClick={user && handleSignOut}>
+            <div className={`nav__itemLineOne ${user ? 'nav__itemLineOne--loggedIn' : ''}`}>Hello <span>{userName}</span></div>
+            <div className="nav__itemLineTwo">{user ? 'Sign Out' : 'Sign In'}</div>
+          </div>
+        </Link>
 
         <div className="nav__item">
           <div className="nav__itemLineOne">Your</div>
